@@ -1,8 +1,8 @@
 "use strict";
 
 // importing modules
-const Joi = require("joi");
 const express = require("express");
+const Joi = require("joi");
 
 // creating app and configuring middlewares
 const app = express();
@@ -54,11 +54,11 @@ app.get("/api/students/:id", (req, res) => {
  */
 app.post("/api/students", (req, res) => {
     const schema = {
-        name: Joi.string().required().min(5),
+        name: Joi.string().min(3).required(),
         courses: Joi.array().min(2).required()
     };
 
-    const result = Joi.validate(req.body.course, schema);
+    const result = Joi.validate(req.body, schema);
     if (result.error)
         return res.status(400).send(result.error.details[0].message);
 
@@ -81,7 +81,7 @@ app.put("/api/students/:id", (req, res) => {
         courses: Joi.array().min(2).required()
     };
 
-    const result = Joi.validate(req.body.course, schema);
+    const result = Joi.validate(req.body, schema);
     if (result.error)
         return res.status(400).send(result.error.details[0].message);
 
