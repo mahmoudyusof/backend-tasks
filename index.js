@@ -2,7 +2,12 @@
 
 // importing modules
 const express = require("express");
-const Joi = require("joi");
+const mongoose = require("mongoose");
+
+mongoose.connect("mongodb://localhost/playground", {useNewUrlParser:true, useUnifiedTopology:true})
+    .then(() => console.log("Connected to database...."))
+    .catch((err) => console.log(err))
+
 
 // creating app and configuring middlewares
 const app = express();
@@ -10,9 +15,12 @@ app.use(express.json());
 
 // -----------------IMPORTING ROUTES-----------------
 // functional approach
+// this doesn't have database integration
 const coursesRoutes = require("./routes/courses.js");
 coursesRoutes(app);
+
 // router object approach
+// this has database integration
 const studentsRouter = require("./routes/students.js");
 app.use("/api/students", studentsRouter);
 
